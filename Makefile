@@ -1,3 +1,8 @@
+-include Makefile.local
+
+nproc ?= 2
+PROGRAM ?= test_programs/dhry_1_O3.s
+
 VERILATOR_FLAGS = \
 	--cc --build --threads 4 --unroll-stmts 999999 -unroll-count 999999 --assert -Wall -Wno-BLKSEQ -Wno-UNUSED \
 	-Wno-PINCONNECTEMPTY -Wno-DECLFILENAME -Wno-ENUMVALUE -Wno-GENUNNAMED -O3 -sv \
@@ -114,6 +119,10 @@ SRC_FILES = \
 .PHONY: soomrv
 soomrv: $(SLANG_HEADER_OUTPUT)
 	verilator $(VERILATOR_FLAGS) $(VERILATOR_CFG) $(SRC_FILES)
+
+.PHONY: run
+run: soomrv
+	./obj_dir/VTop "$(PROGRAM)"
 
 .PHONY: linux
 linux: soomrv

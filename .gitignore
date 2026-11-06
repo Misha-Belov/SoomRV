@@ -32,3 +32,5 @@
 !docs
 !docs/*
 !Dockerfile
+
+/Makefile.local
